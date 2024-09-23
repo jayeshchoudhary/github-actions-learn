@@ -3,13 +3,23 @@ on:
     push: # Run the workflow on push events
         branches: [main, master]
     schedule:
-        - cron: "30 11 * * 1" # 5 PM IST or 3:30 AM PST or 11:30 AM UTC
+        - cron: "30 11 * * *" # run everyday at 5 PM IST or 3:30 AM PST or 11:30 AM UTC
     workflow_dispatch: # Manually trigger the workflow
 jobs:
     test:
         timeout-minutes: 60
         runs-on: ubuntu-latest
+        env:
+            EMAIL: ${{ secrets.EMAIL }}
+            PASSWORD: ${{ secrets.PASSWORD }}
         steps:
+            # Add the Tailscale step here
+            - name: Tailscale
+              uses: tailscale/github-action@v2
+              with:
+                  oauth-client-id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
+                  oauth-secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
+                  tags: tag:ci
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v4
               with:
@@ -20,8 +30,6 @@ jobs:
               run: npx playwright install --with-deps
             - name: Run Playwright tests
               run: npx playwright test
-            - name: Print CI environment variable
-              run: node -e "console.log('CI:', process.env.CI)"
             - uses: actions/upload-artifact@v4
               if: always()
               with:

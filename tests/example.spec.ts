@@ -18,3 +18,17 @@ test("get started link", async ({ page }) => {
         page.getByRole("heading", { name: "Installation" })
     ).toBeVisible();
 });
+
+test("login to admin portal dev", async ({ page }) => {
+    await page.goto("https://admin-portal.startree-dev.cloud/");
+    await page.waitForURL("https://startree-*.auth0.com/*");
+    await page.getByLabel("Email").click();
+    await page.getByLabel("Email").fill(process.env.EMAIL || "test");
+    await page.getByLabel("Password").click();
+    await page.getByLabel("Password").fill(process.env.PASSWORD || "test");
+    await page.getByRole("button", { name: "LOG IN", exact: true }).click();
+
+    await page.waitForURL("/overview");
+
+    await expect(page.getByRole("heading", { name: "Overview" })).toBeVisible();
+});
