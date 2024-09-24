@@ -22,7 +22,7 @@ jobs:
 
             - name: Connect to Tailscale with Exit Node
               run: |
-                  tailscale up --exit-node=100.103.30.72
+                  tailscale up --exit-node=100.97.211.122
 
             - name: Check Tailscale connection
               run: tailscale status
