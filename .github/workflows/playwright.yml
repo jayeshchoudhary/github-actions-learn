@@ -21,8 +21,13 @@ jobs:
                   oauth-secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
                   tags: tag:ci
               # Check if Tailscale is connected properly
+
             - name: Check Tailscale connection
               run: tailscale status
+
+            - name: Check service accessibility
+              run: curl -I https://admin-portal.startree-dev.cloud/overview
+              # Replace the URL with the actual VPN-restricted URL you're trying to reach
 
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v4
