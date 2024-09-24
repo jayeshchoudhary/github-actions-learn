@@ -1,10 +1,10 @@
 name: Playwright Tests
 on:
-    push: # Run the workflow on push events
+    push:
         branches: [main, master]
     schedule:
-        - cron: "30 11 * * *" # run everyday at 5 PM IST or 3:30 AM PST or 11:30 AM UTC
-    workflow_dispatch: # Manually trigger the workflow
+        - cron: "30 11 * * *"
+    workflow_dispatch:
 jobs:
     test:
         timeout-minutes: 60
@@ -13,32 +13,52 @@ jobs:
             EMAIL: ${{ secrets.EMAIL }}
             PASSWORD: ${{ secrets.PASSWORD }}
         steps:
-            # Add the Tailscale step here
             - name: Connect to Tailscale
               uses: tailscale/github-action@v2
               with:
                   oauth-client-id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
                   oauth-secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
                   tags: tag:ci
-              # Check if Tailscale is connected properly
 
             - name: Check Tailscale connection
               run: tailscale status
 
-            - name: Check service accessibility
-              run: curl -I https://admin-portal.startree-dev.cloud/overview
-              # Replace the URL with the actual VPN-restricted URL you're trying to reach
+            - name: prod accessibliity
+              run: curl -I https://admin-portal.startree.cloud/overview
 
+            - name: staging accessibliity
+              run: curl -I https://admin-portal.startree-staging.cloud/overview
+
+            - name: Check service accessibility
+              id: check_service
+              run: |
+                  STATUS_CODE=$(curl -o /dev/null -s -w "%{http_code}" https://admin-portal.startree-dev.cloud/overview)
+                  echo "Status Code: $STATUS_CODE"
+                  if [ "$STATUS_CODE" -ne 200 ]; then
+                    echo "Service is not accessible (HTTP $STATUS_CODE)"
+                    exit 1
+                  fi
+
+            # Only run these steps if the previous step succeeded (service is accessible)
             - uses: actions/checkout@v4
+              if: success()
             - uses: actions/setup-node@v4
               with:
                   node-version: lts/*
+              if: success()
+
             - name: Install dependencies
               run: npm ci
+              if: success()
+
             - name: Install Playwright Browsers
               run: npx playwright install --with-deps
+              if: success()
+
             - name: Run Playwright tests
               run: npx playwright test
+              if: success()
+
             - uses: actions/upload-artifact@v4
               if: always()
               with:
