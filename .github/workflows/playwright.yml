@@ -20,6 +20,10 @@ jobs:
                   oauth-secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
                   tags: tag:ci
 
+            - name: Connect to Tailscale with Exit Node
+              run: |
+                  tailscale up --exit-node=startree-exit-node
+
             - name: Check Tailscale connection
               run: tailscale status
 
