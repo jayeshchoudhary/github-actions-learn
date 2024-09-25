@@ -18,10 +18,6 @@ jobs:
               with:
                   authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
 
-            - name: Connect to Tailscale with Exit Node
-              run: |
-                  tailscale up --exit-node=100.97.211.122
-
             - name: Check Tailscale connection
               run: tailscale status
 
