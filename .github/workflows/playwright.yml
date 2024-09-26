@@ -21,7 +21,7 @@ jobs:
                   tags: tag:eng
 
             - name: Tailscale up
-              run: tailscale up --exit-node=startree-exit-node
+              run: tailscale up --exit-node=100.103.30.72
 
             # - name: Set exit node
             #   run: tailscale set --exit-node=100.103.30.72
