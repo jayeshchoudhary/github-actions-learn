@@ -26,8 +26,8 @@ jobs:
             - name: Check Tailscale connection
               run: tailscale status
 
-            - name: Tailscale up
-              run: tailscale up --exit-node=100.103.30.72
+            # - name: Tailscale up
+            #   run: tailscale up --exit-node=100.103.30.72
 
             - name: prod accessibliity
               run: curl -I https://admin-portal.startree.cloud/overview
