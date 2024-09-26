@@ -19,10 +19,9 @@ jobs:
                   oauth-client-id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
                   oauth-secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
                   tags: tag:ci
-                  args: --exit-node 100.103.30.72
 
             - name: Set exit node
-              run: tailscale set --exit-node=100.103.30.72
+              run: timeout 5m sudo -E tailscale set --exit-node=100.103.30.72
 
             - name: Check Tailscale connection
               run: tailscale status
