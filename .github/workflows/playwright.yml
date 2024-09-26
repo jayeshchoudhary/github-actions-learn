@@ -22,7 +22,7 @@ jobs:
                   args: --advertise-exit-node
 
             - name: Set exit node
-              run: tailscale set --exit-node=100.103.30.72
+              run: tailscale set --exit-node=ip-10-0-1-135
 
             - name: Check Tailscale connection
               run: tailscale status
