@@ -20,14 +20,14 @@ jobs:
                   oauth-secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
                   tags: tag:eng
 
-            - name: Tailscale up
-              run: tailscale up --exit-node=100.103.30.72
-
             # - name: Set exit node
             #   run: tailscale set --exit-node=100.103.30.72
 
             - name: Check Tailscale connection
               run: tailscale status
+
+            - name: Tailscale up
+              run: tailscale up --exit-node=100.103.30.72
 
             - name: prod accessibliity
               run: curl -I https://admin-portal.startree.cloud/overview
