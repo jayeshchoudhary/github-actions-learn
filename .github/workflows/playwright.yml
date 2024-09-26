@@ -18,7 +18,7 @@ jobs:
               with:
                   oauth-client-id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
                   oauth-secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
-                  args: "--advertise-exit-node --exit-node-allow-lan-access --exit-node=100.103.30.72"
+                  args: "--exit-node-allow-lan-access --exit-node=100.103.30.72"
                   tags: tag:ci
 
             # - name: Set exit node
