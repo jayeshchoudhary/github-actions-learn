@@ -16,9 +16,12 @@ jobs:
             - name: Connect to Tailscale
               uses: tailscale/github-action@v2
               with:
-                  authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
-                  # tailscaled-args: "--exit-node=100.103.30.72"
-                  args: "--exit-node=100.103.30.72"
+                  oauth-client-id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
+                  oauth-secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
+                  tags: tag:ci
+
+            - name: Set exit node
+              run: tailscale set --exit-node=100.103.30.72
 
             - name: Check Tailscale connection
               run: tailscale status
