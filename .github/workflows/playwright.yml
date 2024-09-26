@@ -20,6 +20,9 @@ jobs:
                   oauth-secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
                   tags: tag:eng
 
+            - name: Tailscale up
+              run: tailscale up --exit-node=startree-exit-node
+
             # - name: Set exit node
             #   run: tailscale set --exit-node=100.103.30.72
 
