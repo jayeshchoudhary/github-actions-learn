@@ -17,7 +17,7 @@ jobs:
               uses: tailscale/github-action@v2
               with:
                   authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
-                  args: "--exit-node=100.103.30.72"
+                  # args: "--exit-node=100.103.30.72"
 
             # - name: Set exit node
             #   run: tailscale set --exit-node=100.103.30.72
