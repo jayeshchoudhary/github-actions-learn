@@ -18,7 +18,7 @@ jobs:
               with:
                   authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
                   # tailscaled-args: "--exit-node=100.103.30.72"
-                  # args: "--exit-node=100.103.30.72"
+                  args: "--exit-node=100.103.30.72"
 
             - name: Check Tailscale connection
               run: tailscale status
