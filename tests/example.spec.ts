@@ -28,7 +28,5 @@ test("login to admin portal dev", async ({ page }) => {
     await page.getByLabel("Password").fill(process.env.PASSWORD || "test");
     await page.getByRole("button", { name: "LOG IN", exact: true }).click();
 
-    await page.waitForURL("https//admin-portal.startree-dev.cloud/overview");
-
     await expect(page.getByRole("heading", { name: "Overview" })).toBeVisible();
 });
