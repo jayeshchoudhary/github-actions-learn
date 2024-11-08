@@ -20,7 +20,7 @@ jobs:
                   tags: tag:eng
 
             - name: Set exit node
-              run: sudo tailscale set --exit-node=100.103.30.72
+              run: sudo tailscale set --exit-node=100.97.211.122
 
             - name: Check Tailscale connection
               run: tailscale status
