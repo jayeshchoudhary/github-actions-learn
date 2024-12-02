@@ -2,8 +2,8 @@ name: Playwright Tests
 on:
     push:
         branches: [main, master]
-    schedule:
-        - cron: "30 11 * * *"
+    # schedule:
+    #     - cron: "30 11 * * *"
     workflow_dispatch:
 jobs:
     test:
@@ -16,11 +16,12 @@ jobs:
             - name: Connect to Tailscale
               uses: tailscale/github-action@v2
               with:
-                  authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+                  oauth-client-id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
+                  oauth-secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
                   tags: tag:eng
 
-            - name: Set exit node
-              run: sudo tailscale set --exit-node=100.97.211.122
+            # - name: Set exit node
+            #   run: sudo tailscale set --exit-node=100.97.211.122
 
             - name: Check Tailscale connection
               run: tailscale status
