@@ -20,8 +20,8 @@ jobs:
                   oauth-secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
                   tags: tag:ci
 
-            - name: Set exit node
-              run: sudo tailscale set --exit-node=100.103.30.72
+            # - name: Set exit node
+            #   run: sudo tailscale set --exit-node=100.103.30.72
 
             - name: Check Tailscale connection
               run: tailscale status
